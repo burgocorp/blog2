@@ -3,8 +3,12 @@ const express = require('express');
 const router = express.Router();
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const userModel = require('../models/user');
+
+
 const validateRegisterInput = require('../validation/register');
+const validateLoginInput = require('../validation/login');
 
 
 
@@ -72,6 +76,11 @@ router.post('/register', (req,res ) => {
 
 //user login 1.email check 2.password check(decoding) 3. returning jwt 4. response
 router.post('/login', (req,res) => {
+
+    const {errors, isValid} = validateLoginInput(req.body);
+    if (!isValid){
+        return res.status(400).json(errors);
+    }
 
     userModel
         .findOne({email : req.body.email})
