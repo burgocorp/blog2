@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
-const mongoDBurl = "mongodb+srv://myounghwan:qnfmrh0228@cluster0-1dywn.mongodb.net/test?retryWrites=true&w=majority"
-mongoose.connect(mongoDBurl,{
+mongoose.connect(process.env.MONGOURL,{
     useNewUrlParser : true,
     useUnifiedTopology : true,
     useCreateIndex : true
